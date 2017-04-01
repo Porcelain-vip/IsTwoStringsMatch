@@ -2,22 +2,27 @@
 #include<string>
 using namespace std;
 
-size_t Match(const string &stra, const string &strb, size_t pos = 0)
+int strstr(const string dest, const string pat)
 {
-	size_t startpos = 0, i = pos, j = 0;
-	while (i != stra.length() && j != strb.size())
+	const size_t N = dest.size() - pat.size() + 1;
+	for (int i = 0; i != N; ++i)
 	{
-		if (stra[i] == strb[j]) { ++i; ++j; }
-		else { i = ++startpos; j = 0; }
+		int k = i, j = 0;
+		for (; j != pat.size() && dest[k] == pat[j];)
+		{
+			++k; ++j;
+			if (j == pat.size()) return i;
+		}
 	}
-	if (j == strb.size()) return startpos;
-	else return -1;
+	return -1;
 }
 
 int main()
 {
-	string stra = "ABCDEFG", strb = "CDE";
-	size_t n = Match(stra, strb);
+	string a, b;
+	cout << "Please input two strings in which the first one is longer than the second: " << endl;
+	cin >> a >> b;
+	int n = strstr(a, b);
 	cout << "The start position from zero is " << n << endl;
-	return 0;
+	return EXIT_SUCCESS;
 }
